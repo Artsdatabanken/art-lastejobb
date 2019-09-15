@@ -137,38 +137,12 @@ function cleanKriterie(r) {
   if (!r) return;
   delete r.a;
   delete r.b;
-  if (r.c) {
-    delete r.c["usikkerhet opp"];
-    delete r.c["usikkerhet ned"];
-    delete r.c.delkategori;
-  }
-  if (r.d) {
-    delete r.d["usikkerhet opp"];
-    delete r.d["usikkerhet ned"];
-    delete r.d.delkategori;
-  }
-  if (r.e) {
-    delete r.e.delkategori;
-    delete r.e["usikkerhet ned"];
-    delete r.e["usikkerhet opp"];
-  }
+  delete r.c;
+  delete r.d;
+  delete r.e;
   delete r.f;
-  if (r.g) {
-    delete r.g.delkategori;
-    delete r.g["usikkerhet ned"];
-    delete r.g["usikkerhet opp"];
-  }
-  if (r.h) {
-    delete r.h["usikkerhet ned"];
-    delete r.h["usikkerhet opp"];
-    delete r.h.delkategori;
-  }
-  if (r.i) {
-    delete r.i["usikkerhet ned"];
-    delete r.i["usikkerhet opp"];
-    delete r.i.delkategori;
-    delete r.i[""];
-  }
+  delete r.g;
+  delete r.h;
+  delete r.i;
   delete r["utslagsgivende 2018"];
 }
-//.map(e => "NN-NA-TI-" + e);
