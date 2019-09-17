@@ -1,10 +1,8 @@
 const { io, json } = require("lastejobb");
 
-const moveKey = json.moveKey;
-
 const items = io.lesDatafil("fremmede-arter/type").items;
 items.forEach(rec => map(rec));
-io.skrivBuildfil("type", json.arrayToObject(items, { uniqueKey: "kode" }));
+io.skrivDatafil(__filename, items);
 
 function map(e) {
   mapArter(e.risikovurdering);
@@ -61,7 +59,7 @@ function map(e) {
     e.livsmiljø = e.utbredelse.livsmiljø;
     delete e.utbredelse.livsmiljø;
   }
-  moveKey(e, "beskrivelse av arten", "ingress.nb");
+  json.moveKey(e, "beskrivelse av arten", "ingress.nb");
   e.risikovurdering.risiko = e.risikovurdering["risikonivå 2018"];
   delete e.risikovurdering["risikonivå 2018"];
   cleanVurdering(e.risikovurdering);
