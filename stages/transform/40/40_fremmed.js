@@ -7,6 +7,7 @@ fab.forEach(rec => map(rec));
 io.skrivDatafil(__filename, fab);
 
 function map(rec) {
+  if (!rec.id) return;
   rec.lenke = {
     fab:
       "https://artsdatabanken.no/fremmedarter/2018" + rec.id.replace("FA3", "")
@@ -46,6 +47,7 @@ function latinTilKode() {
   const r = {};
 
   arter.forEach(art => {
+    if (!art.foreldre) return;
     const fkode = art.foreldre[0];
     const fnavn = kode2navn[fkode];
     const f = fnavn ? fnavn + " " : "";

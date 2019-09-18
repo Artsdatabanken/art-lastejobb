@@ -5,9 +5,9 @@ items.forEach(rec => map(rec));
 io.skrivDatafil(__filename, items);
 
 function map(e) {
-  mapArter(e.risikovurdering);
-  mapNaturtyper(e.risikovurdering);
   if (e.risikovurdering) {
+    mapArter(e.risikovurdering);
+    mapNaturtyper(e.risikovurdering);
     json.moveKey(e, "reproduksjon", "egenskap.reproduksjon");
     const rv = e.risikovurdering;
     const fo = rv.import && rv.import["først observert"];
@@ -52,6 +52,9 @@ function map(e) {
         ] = oste;
       }
     }
+    e.risikovurdering.risiko = e.risikovurdering["risikonivå 2018"];
+    delete e.risikovurdering["risikonivå 2018"];
+    cleanVurdering(e.risikovurdering);
   }
   if (e.utbredelse) delete e.utbredelse["finnes i områder"];
   const lm = e.utbredelse && e.utbredelse.livsmiljø;
@@ -60,11 +63,8 @@ function map(e) {
     delete e.utbredelse.livsmiljø;
   }
   json.moveKey(e, "beskrivelse av arten", "ingress.nb");
-  e.risikovurdering.risiko = e.risikovurdering["risikonivå 2018"];
-  delete e.risikovurdering["risikonivå 2018"];
-  cleanVurdering(e.risikovurdering);
   delete e.utbredelse;
-  e.kode = "AR-" + e.takson.taxonid;
+  if (e.takson) e.kode = "AR-" + e.takson.taxonid;
   delete e.takson;
   const remove = [
     "tidligere vurdert",
