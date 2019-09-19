@@ -1,6 +1,6 @@
 const { io, json } = require("lastejobb");
 
-const art = io.lesDatafil("art-kode/type").items;
+const art = io.lesDatafil("art-kode/art").items;
 const fremmede = json.arrayToObject(io.lesDatafil("40_fremmed").items, {
   uniqueKey: "kode"
 });
