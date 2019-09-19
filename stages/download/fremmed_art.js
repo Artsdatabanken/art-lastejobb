@@ -1,6 +1,6 @@
 const { git } = require("lastejobb");
 
 git.clone(
-  "https://github.com/Artsdatabanken/fremmede-arter.git",
-  "data/fremmede-arter"
+  "https://github.com/Artsdatabanken/fremmed-art.git",
+  "data/fremmed-art"
 );

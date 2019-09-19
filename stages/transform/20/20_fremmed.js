@@ -1,6 +1,6 @@
 const { io, json } = require("lastejobb");
 
-const items = io.lesDatafil("fremmede-arter/type").items;
+const items = io.lesDatafil("fremmed-art/art").items;
 items.forEach(rec => map(rec));
 io.skrivDatafil(__filename, items);
 
