@@ -15,7 +15,7 @@ function map(rec) {
   delete rec.id;
   const rv = rec.risikovurdering;
   if (!rv) return;
-  rv.risiko = "FA-" + rv.risiko;
+  if (rv.risiko) rv.risiko = "FA-" + rv.risiko;
   mapArter(rv);
   mapNaturtyper(rv);
 }
@@ -39,7 +39,7 @@ function mapArter(rv) {
 }
 
 function latinTilKode() {
-  const arter = io.lesDatafil("art-kode/type").items;
+  const arter = io.lesDatafil("art-kode/art").items;
   const kode2navn = {};
   arter.forEach(art => {
     kode2navn[art.kode] = art.tittel.la;
