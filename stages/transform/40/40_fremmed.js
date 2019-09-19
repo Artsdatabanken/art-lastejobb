@@ -42,7 +42,7 @@ function latinTilKode() {
   const arter = io.lesDatafil("art-kode/art").items;
   const kode2navn = {};
   arter.forEach(art => {
-    kode2navn[art.kode] = art.tittel.la;
+    kode2navn[art.kode] = art.tittel.sn;
   });
   const r = {};
 
@@ -51,7 +51,7 @@ function latinTilKode() {
     const fkode = art.foreldre[0];
     const fnavn = kode2navn[fkode];
     const f = fnavn ? fnavn + " " : "";
-    const tit = f + art.tittel.la;
+    const tit = f + art.tittel.sn;
     r[tit.toLowerCase()] = art.kode;
   });
   return r;
