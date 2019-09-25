@@ -7,10 +7,10 @@ fab.forEach(rec => map(rec));
 io.skrivDatafil(__filename, fab);
 
 function map(rec) {
-  if (!rec.id) return;
   rec.lenke = {
     fab:
-      "https://artsdatabanken.no/fremmedarter/2018" + rec.id.replace("FA3", "")
+      "https://artsdatabanken.no/fremmedarter/2018" +
+      rec.autorkode.replace("FA3", "")
   };
   delete rec.id;
   const rv = rec.risikovurdering;
