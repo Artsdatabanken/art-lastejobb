@@ -1,3 +1,6 @@
-const { git } = require("lastejobb")
+const { git } = require("lastejobb");
 
-git.clone("https://github.com/Artsdatabanken/art-kode.git", "data/art-kode")
+git.clone(
+  "https://github.com/Artsdatabanken/art-takson.git",
+  "data/art-takson"
+);

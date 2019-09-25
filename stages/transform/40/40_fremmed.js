@@ -39,7 +39,7 @@ function mapArter(rv) {
 }
 
 function latinTilKode() {
-  const arter = io.lesDatafil("art-kode/art").items;
+  const arter = io.lesDatafil("art-takson/art").items;
   const kode2navn = {};
   arter.forEach(art => {
     kode2navn[art.kode] = art.tittel.sn;
