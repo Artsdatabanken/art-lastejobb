@@ -39,7 +39,7 @@ function mapArter(rv) {
 }
 
 function latinTilKode() {
-  const arter = io.lesDatafil("art-takson/art").items;
+  const arter = io.lesDatafil("art-takson/type").items;
   const kode2navn = {};
   arter.forEach(art => {
     kode2navn[art.kode] = art.tittel.sn;
@@ -52,7 +52,8 @@ function latinTilKode() {
     const fnavn = kode2navn[fkode];
     const f = fnavn ? fnavn + " " : "";
     const tit = f + art.tittel.sn;
-    r[tit.toLowerCase()] = art.kode;
+    if (art.tittel.sn.toLowerCase().indexOf("arion ater") >= 0) debugger;
+    r[art.tittel.sn.toLowerCase()] = art.kode;
   });
   return r;
 }
