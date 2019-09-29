@@ -33,6 +33,14 @@ function mapArter(rv) {
   if (!artsnavn) return;
   rv.arter = artsnavn.map(art => {
     art = art.toLowerCase();
+
+    /*
+  Ukjent art: poa pratensis pratensis 
+  Ukjent art: urtica dioica dioica 
+  Ukjent art: pinus sylvestris sylvestris 
+     */
+    if (!la2kode[art]) art = art.replace(/\s(\w*?)$/, " subsp. $1");
+
     if (!la2kode[art]) log.warn("Ukjent art: " + art);
     return la2kode[art];
   });
@@ -48,11 +56,6 @@ function latinTilKode() {
 
   arter.forEach(art => {
     if (!art.foreldre) return;
-    const fkode = art.foreldre[0];
-    const fnavn = kode2navn[fkode];
-    const f = fnavn ? fnavn + " " : "";
-    const tit = f + art.tittel.sn;
-    if (art.tittel.sn.toLowerCase().indexOf("arion ater") >= 0) debugger;
     r[art.tittel.sn.toLowerCase()] = art.kode;
   });
   return r;
