@@ -14,6 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lastejobb": "^2.6.9"
+    "lastejobb": "^2.8.0"
   }
 }
