@@ -4,12 +4,15 @@ const art = io.lesDatafil("art-takson/type").items;
 const fremmede = json.arrayToObject(io.lesDatafil("40_fremmed").items, {
   uniqueKey: "kode"
 });
-const ingress = json.arrayToObject(io.lesDatafil("art-ingress/ingress").items, {
-  uniqueKey: "kode"
-});
+const beskrivelser = json.arrayToObject(
+  io.lesDatafil("art-beskrivelse/type").items,
+  {
+    uniqueKey: "kode"
+  }
+);
 
 art.forEach(e => {
-  flett(e, ingress[e.kode]);
+  flett(e, beskrivelser[e.kode]);
   flett(e, fremmede[e.kode]);
 });
 
