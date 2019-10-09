@@ -62,7 +62,7 @@ function map(e) {
     e.livsmiljø = e.utbredelse.livsmiljø;
     delete e.utbredelse.livsmiljø;
   }
-  json.moveKey(e, "beskrivelse av arten", "ingress.nb");
+  json.moveKey(e, "beskrivelse av arten", "beskrivelse.nob");
   delete e.utbredelse;
   if (e.takson) e.kode = "AR-" + e.takson.taxonid;
   delete e.takson;
