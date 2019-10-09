@@ -64,7 +64,7 @@ function map(e) {
   }
   json.moveKey(e, "beskrivelse av arten", "beskrivelse.nob");
   delete e.utbredelse;
-  if (e.takson) e.kode = "AR-" + e.takson.taxonid;
+  if (e.takson) e.kode = "AR-" + e.takson.scientificnameid;
   delete e.takson;
   const remove = [
     "tidligere vurdert",
