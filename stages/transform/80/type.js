@@ -10,6 +10,8 @@ const beskrivelser = json.arrayToObject(
     uniqueKey: "kode"
   }
 );
+const fremmedrot = io.lesDatafil("art-fremmed/type").items;
+fremmedrot.forEach(fremmed => art.push(fremmed));
 
 art.forEach(e => {
   flett(e, beskrivelser[e.kode]);
@@ -20,7 +22,5 @@ io.skrivBuildfil(__filename, art);
 
 function flett(dest, src) {
   if (!src) return;
-  Object.keys(src).forEach(key => {
-    dest[key] = src[key];
-  });
+  Object.keys(src).forEach(key => (dest[key] = src[key]));
 }
