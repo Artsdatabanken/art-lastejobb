@@ -1,4 +1,4 @@
-const { io, log } = require("lastejobb");
+const { io, json, log } = require("lastejobb");
 
 const fab = io.lesDatafil("20_fremmed").items;
 const la2kode = latinTilKode();
@@ -17,15 +17,6 @@ function map(rec) {
   if (!rv) return;
   if (rv.risiko) rv.risiko = "FA-" + rv.risiko;
   mapArter(rv);
-  mapNaturtyper(rv);
-}
-
-function mapNaturtyper(rv) {
-  const koder = rv && rv.naturtyper;
-  if (!koder) return;
-  rv.naturtyper = koder.map(kode => {
-    return "NN-NA-TI-" + kode;
-  });
 }
 
 function mapArter(rv) {

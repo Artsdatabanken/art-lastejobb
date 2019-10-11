@@ -6,8 +6,8 @@ io.skrivDatafil(__filename, items);
 
 function map(e) {
   if (e.risikovurdering) {
-    mapArter(e.risikovurdering);
-    mapNaturtyper(e.risikovurdering);
+    mapArter(e, e.risikovurdering);
+    mapNaturtyper(e, e.risikovurdering);
     json.moveKey(e, "reproduksjon", "egenskap.reproduksjon");
     const rv = e.risikovurdering;
     const fo = rv.import && rv.import["først observert"];
@@ -52,7 +52,8 @@ function map(e) {
         ] = oste;
       }
     }
-    e.risikovurdering.risiko = e.risikovurdering["risikonivå 2018"];
+    if (e.risikovurdering.risikonivå)
+      addItems(e, e.risikovurdering.risikonivå, "nå", "FA-", "risiko");
     delete e.risikovurdering["risikonivå 2018"];
     cleanVurdering(e.risikovurdering);
   }
@@ -78,34 +79,38 @@ function map(e) {
   json.removeEmptyKeys(e);
 }
 
-function mapArter(rv) {
+function mapArter(e, rv) {
   const krit = rv.kriterie;
   if (!krit) return;
-  let r = [];
-  addItems(r, krit.d, "trua arter/nøkkelarter");
-  addItems(r, krit.e, "andre arter/nøkkelarter");
-  r = r.filter(onlyUnique);
-  if (r.length > 0) rv.arter = r;
+  addItems(e, krit.d, "trua arter/nøkkelarter");
+  addItems(e, krit.e, "andre arter/nøkkelarter");
 }
 
-function mapNaturtyper(rv) {
+function mapNaturtyper(e, rv) {
+  const NATURTYPE_PREFIX = "NN-NA-";
   const krit = rv.kriterie;
   if (!krit) return;
-  let r = [];
-  addItems(r, krit.c, "koloniserte naturtyper");
-  addItems(r, krit.d, "naturtyper");
-  addItems(r, krit.e, "naturtyper");
-  addItems(r, krit.g, "øvrige naturtyper");
-  r = r.filter(onlyUnique);
-  if (r.length > 0) rv.naturtyper = r;
+  addItems(e, krit.c, "koloniserte naturtyper", NATURTYPE_PREFIX);
+  addItems(e, krit.d, "naturtyper", NATURTYPE_PREFIX);
+  addItems(e, krit.e, "naturtyper", NATURTYPE_PREFIX);
+  addItems(e, krit.g, "øvrige naturtyper", NATURTYPE_PREFIX);
 }
 
-function addItems(r, krit, key) {
-  let c = krit && krit[key];
-  if (!c) return;
-  delete krit[key];
-  if (!Array.isArray(c)) c = [c];
-  r.push(...c);
+function addItems(rec, kriterier, key, prefix = "", destkey) {
+  destkey = destkey || key;
+  let koder = kriterier && kriterier[key];
+  if (!koder) return;
+  delete kriterier[key];
+  if (!Array.isArray(koder)) koder = [koder];
+
+  koder = koder.filter(onlyUnique);
+  if (koder.length <= 0) return;
+
+  rec.relasjon = rec.relasjon || {};
+  const relasjon = rec.relasjon;
+  relasjon[destkey] = relasjon[destkey] || [];
+  const dest = relasjon[destkey];
+  koder.forEach(kode => dest.push(prefix + kode));
 }
 
 function onlyUnique(value, index, self) {
