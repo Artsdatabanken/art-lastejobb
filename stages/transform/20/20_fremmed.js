@@ -1,5 +1,43 @@
 const { io, json } = require("lastejobb");
 
+const NATURTYPE_PREFIX = "NN-NA-";
+const relasjon_oppsett = [
+  {
+    kriterie: "c",
+    key: "koloniserte naturtyper",
+    prefix: NATURTYPE_PREFIX,
+    tekst: "Koloniserer<->Er kolonisert av"
+  },
+  {
+    kriterie: "d",
+    key: "naturtyper",
+    prefix: NATURTYPE_PREFIX,
+    tekst: "Har effekt på andre arter i"
+  },
+  {
+    kriterie: "e",
+    key: "naturtyper",
+    prefix: NATURTYPE_PREFIX,
+    tekst: "Har effekt på andre arter i"
+  },
+  {
+    kriterie: "g",
+    key: "øvrige naturtyper",
+    prefix: NATURTYPE_PREFIX,
+    tekst: "har effekt på"
+  },
+  {
+    kriterie: "d",
+    key: "trua arter/nøkkelarter",
+    tekst: "Truer<->Trues av"
+  },
+  {
+    kriterie: "e",
+    key: "andre arter/nøkkelarter",
+    tekst: "Truer<->Trues av"
+  }
+];
+
 const items = io.lesDatafil("art-fremmed/art").items;
 items.forEach(rec => map(rec));
 io.skrivDatafil(__filename, items);
@@ -30,8 +68,7 @@ function map(e) {
 
 function mapRisikovurdering(e) {
   if (!e.risikovurdering) return;
-  mapArter(e, e.risikovurdering);
-  mapNaturtyper(e, e.risikovurdering);
+  mapRelasjoner(e, e.risikovurdering);
   json.moveKey(e, "reproduksjon", "egenskap.reproduksjon");
   const rv = e.risikovurdering;
   const fo = rv.import && rv.import["først observert"];
@@ -78,21 +115,12 @@ function mapRisikovurdering(e) {
   cleanVurdering(e.risikovurdering);
 }
 
-function mapArter(e, rv) {
+function mapRelasjoner(e, rv) {
   const krit = rv.kriterie;
   if (!krit) return;
-  addItems(e, krit.d, "trua arter/nøkkelarter");
-  addItems(e, krit.e, "andre arter/nøkkelarter");
-}
-
-function mapNaturtyper(e, rv) {
-  const NATURTYPE_PREFIX = "NN-NA-";
-  const krit = rv.kriterie;
-  if (!krit) return;
-  addItems(e, krit.c, "koloniserte naturtyper", NATURTYPE_PREFIX);
-  addItems(e, krit.d, "naturtyper", NATURTYPE_PREFIX);
-  addItems(e, krit.e, "naturtyper", NATURTYPE_PREFIX);
-  addItems(e, krit.g, "øvrige naturtyper", NATURTYPE_PREFIX);
+  relasjon_oppsett.forEach(cfg => {
+    addItems(e, krit[cfg.kriterie], cfg.key, cfg.prefix, cfg.tekst);
+  });
 }
 
 function addItems(rec, kriterier, key, prefix = "", destkey) {
