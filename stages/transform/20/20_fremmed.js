@@ -5,58 +5,7 @@ items.forEach(rec => map(rec));
 io.skrivDatafil(__filename, items);
 
 function map(e) {
-  if (e.risikovurdering) {
-    mapArter(e, e.risikovurdering);
-    mapNaturtyper(e, e.risikovurdering);
-    json.moveKey(e, "reproduksjon", "egenskap.reproduksjon");
-    const rv = e.risikovurdering;
-    const fo = rv.import && rv.import["først observert"];
-    if (fo) {
-      e.egenskap = e.egenskap || { reproduksjon: {} };
-      e.egenskap.reproduksjon["først observert"] = fo;
-      delete rv.import["først observert"];
-    }
-    if (e.risikovurdering.kriterie) {
-      const kriterie = e.risikovurdering.kriterie;
-      delete kriterie.definisjonsavgrensning;
-      if (kriterie.definisjonsavgrensning === "NotApplicable")
-        delete kriterie.definisjonsavgrensning;
-      if (kriterie["utenfor definisjon"] === "canNotEstablishWithin50years")
-        delete kriterie["utenfor definisjon"];
-      const oste =
-        kriterie.h &&
-        kriterie.h["overføring av genetisk materiale til stedegne arter"];
-      if (oste !== undefined)
-        delete kriterie.h[
-          "overføring av genetisk materiale til stedegne arter"
-        ];
-      if (oste > 0) {
-        e.risikovurdering["overføring andre arter"] =
-          e.risikovurdering["overføring andre arter"] || {};
-        e.risikovurdering["overføring andre arter"][
-          "genetisk materiale"
-        ] = oste;
-      }
-      const ospa =
-        kriterie.i &&
-        kriterie.i["overføring av parasitter/patogener til stedegne arter"];
-      if (ospa !== undefined)
-        delete kriterie.i[
-          "overføring av parasitter/patogener til stedegne arter"
-        ];
-      if (oste > 0) {
-        e.risikovurdering["overføring andre arter"] =
-          e.risikovurdering["overføring andre arter"] || {};
-        e.risikovurdering["overføring andre arter"][
-          "parasitter/patogener"
-        ] = oste;
-      }
-    }
-    if (e.risikovurdering.risikonivå)
-      addItems(e, e.risikovurdering.risikonivå, "nå", "FA-", "risiko");
-    delete e.risikovurdering["risikonivå 2018"];
-    cleanVurdering(e.risikovurdering);
-  }
+  mapRisikovurdering(e);
   if (e.utbredelse) delete e.utbredelse["finnes i områder"];
   const lm = e.utbredelse && e.utbredelse.livsmiljø;
   if (lm) {
@@ -77,6 +26,56 @@ function map(e) {
   for (let r of remove) delete e[r];
   json.moveKey(e, "risikovurdering.import", "egenskap.");
   json.removeEmptyKeys(e);
+}
+
+function mapRisikovurdering(e) {
+  if (!e.risikovurdering) return;
+  mapArter(e, e.risikovurdering);
+  mapNaturtyper(e, e.risikovurdering);
+  json.moveKey(e, "reproduksjon", "egenskap.reproduksjon");
+  const rv = e.risikovurdering;
+  const fo = rv.import && rv.import["først observert"];
+  if (fo) {
+    e.egenskap = e.egenskap || { reproduksjon: {} };
+    e.egenskap.reproduksjon["først observert"] = fo;
+    delete rv.import["først observert"];
+  }
+  if (e.risikovurdering.kriterie) {
+    const kriterie = e.risikovurdering.kriterie;
+    delete kriterie.definisjonsavgrensning;
+    if (kriterie.definisjonsavgrensning === "NotApplicable")
+      delete kriterie.definisjonsavgrensning;
+    if (kriterie["utenfor definisjon"] === "canNotEstablishWithin50years")
+      delete kriterie["utenfor definisjon"];
+    const oste =
+      kriterie.h &&
+      kriterie.h["overføring av genetisk materiale til stedegne arter"];
+    if (oste !== undefined)
+      delete kriterie.h["overføring av genetisk materiale til stedegne arter"];
+    if (oste > 0) {
+      e.risikovurdering["overføring andre arter"] =
+        e.risikovurdering["overføring andre arter"] || {};
+      e.risikovurdering["overføring andre arter"]["genetisk materiale"] = oste;
+    }
+    const ospa =
+      kriterie.i &&
+      kriterie.i["overføring av parasitter/patogener til stedegne arter"];
+    if (ospa !== undefined)
+      delete kriterie.i[
+        "overføring av parasitter/patogener til stedegne arter"
+      ];
+    if (oste > 0) {
+      e.risikovurdering["overføring andre arter"] =
+        e.risikovurdering["overføring andre arter"] || {};
+      e.risikovurdering["overføring andre arter"][
+        "parasitter/patogener"
+      ] = oste;
+    }
+  }
+  if (e.risikovurdering.risikonivå)
+    addItems(e, e.risikovurdering.risikonivå, "nå", "FA-", "risiko");
+  delete e.risikovurdering["risikonivå 2018"];
+  cleanVurdering(e.risikovurdering);
 }
 
 function mapArter(e, rv) {
