@@ -1,5 +1,10 @@
 const { io, json } = require("lastejobb");
 
+const livsmiljø = {
+  terrestrial: "ES-TE",
+  limnic: "ES-AK-LI",
+  marine: "ES-AK-MA"
+};
 const NATURTYPE_PREFIX = "NN-NA-";
 const relasjon_oppsett = [
   {
@@ -47,7 +52,11 @@ function map(e) {
   if (e.utbredelse) delete e.utbredelse["finnes i områder"];
   const lm = e.utbredelse && e.utbredelse.livsmiljø;
   if (lm) {
-    e.livsmiljø = e.utbredelse.livsmiljø;
+    lm.forEach(lm1 => {
+      const kode = livsmiljø[lm1];
+      if (!kode) throw new Error("Mangler livsmiljø " + lm);
+      addItems(e, { kode }, "kode", "", "Livsmiljø");
+    });
     delete e.utbredelse.livsmiljø;
   }
   json.moveKey(e, "beskrivelse av arten", "beskrivelse.nob");
@@ -164,6 +173,7 @@ function cleanVurdering(r) {
 }
 
 function cleanKriterie(r) {
+  //  return;
   if (!r) return;
   delete r.a;
   delete r.b;
