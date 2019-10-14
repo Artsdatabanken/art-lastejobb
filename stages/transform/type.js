@@ -4,18 +4,22 @@ const art = io.lesDatafil("art-takson/type").items;
 const fremmede = json.arrayToObject(io.lesDatafil("40_fremmed").items, {
   uniqueKey: "kode"
 });
+const truetart = io.lesDatafil("10_truet");
 const beskrivelser = json.arrayToObject(
   io.lesDatafil("art-beskrivelse/type").items,
   {
     uniqueKey: "kode"
   }
 );
+const truetrot = io.lesDatafil("art-truet/type").items;
+truetrot.forEach(truet => art.push(truet));
 const fremmedrot = io.lesDatafil("art-fremmed/type").items;
 fremmedrot.forEach(fremmed => art.push(fremmed));
 
 art.forEach(e => {
   flett(e, beskrivelser[e.kode]);
   flett(e, fremmede[e.kode]);
+  flett(e, truetart[e.kode]);
 });
 
 io.skrivBuildfil(__filename, art);
