@@ -21,30 +21,26 @@ const livsmiljø = {
   limnic: "ES-AK-LI",
   marine: "ES-AK-MA"
 };
-const NATURTYPE_PREFIX = "NN-NA-TI-";
+
 const relasjon_oppsett = [
   {
     kriterie: "c",
     key: "koloniserte naturtyper",
-    prefix: NATURTYPE_PREFIX,
     tekst: "Koloniserer<->Er kolonisert av"
   },
   {
     kriterie: "d",
     key: "naturtyper",
-    prefix: NATURTYPE_PREFIX,
     tekst: "Har effekt på andre arter i"
   },
   {
     kriterie: "e",
     key: "naturtyper",
-    prefix: NATURTYPE_PREFIX,
     tekst: "Har effekt på andre arter i"
   },
   {
     kriterie: "g",
     key: "øvrige naturtyper",
-    prefix: NATURTYPE_PREFIX,
     tekst: "har effekt på"
   },
   {
