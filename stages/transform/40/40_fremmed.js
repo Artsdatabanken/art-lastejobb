@@ -1,4 +1,4 @@
-const { io, json, log } = require("lastejobb");
+const { io, log } = require("lastejobb");
 
 const fab = io.lesDatafil("20_fremmed").items;
 const la2kode = latinTilKode();

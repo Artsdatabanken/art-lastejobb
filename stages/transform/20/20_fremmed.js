@@ -1,11 +1,27 @@
-const { io, json } = require("lastejobb");
+const { io, log, json } = require("lastejobb");
+
+const la2kode = latinTilKode();
+function latinTilKode() {
+  const arter = io.lesDatafil("art-takson/type").items;
+  const kode2navn = {};
+  arter.forEach(art => {
+    kode2navn[art.kode] = art.tittel.sn;
+  });
+  const r = {};
+
+  arter.forEach(art => {
+    if (!art.foreldre) return;
+    r[art.tittel.sn.toLowerCase()] = art.kode;
+  });
+  return r;
+}
 
 const livsmiljø = {
   terrestrial: "ES-TE",
   limnic: "ES-AK-LI",
   marine: "ES-AK-MA"
 };
-const NATURTYPE_PREFIX = "NN-NA-";
+const NATURTYPE_PREFIX = "NN-NA-TI-";
 const relasjon_oppsett = [
   {
     kriterie: "c",
@@ -34,11 +50,13 @@ const relasjon_oppsett = [
   {
     kriterie: "d",
     key: "trua arter/nøkkelarter",
+    mapper: sciName => la2kode[sciName.toLowerCase()],
     tekst: "Truer<->Trues av"
   },
   {
     kriterie: "e",
     key: "andre arter/nøkkelarter",
+    mapper: sciName => la2kode[sciName.toLowerCase()],
     tekst: "Truer<->Trues av"
   }
 ];
@@ -128,11 +146,11 @@ function mapRelasjoner(e, rv) {
   const krit = rv.kriterie;
   if (!krit) return;
   relasjon_oppsett.forEach(cfg => {
-    addItems(e, krit[cfg.kriterie], cfg.key, cfg.prefix, cfg.tekst);
+    addItems(e, krit[cfg.kriterie], cfg.key, cfg.prefix, cfg.tekst, cfg.mapper);
   });
 }
 
-function addItems(rec, kriterier, key, prefix = "", destkey) {
+function addItems(rec, kriterier, key, prefix = "", destkey, mapper) {
   destkey = destkey || key;
   let koder = kriterier && kriterier[key];
   if (!koder) return;
@@ -146,7 +164,14 @@ function addItems(rec, kriterier, key, prefix = "", destkey) {
   const relasjon = rec.relasjon;
   relasjon[destkey] = relasjon[destkey] || [];
   const dest = relasjon[destkey];
-  koder.forEach(kode => dest.push(prefix + kode));
+  koder.forEach(skode => {
+    let kode = skode;
+    if (mapper) {
+      kode = mapper(skode);
+      if (!kode) log.warn("Finner ikke mapping for " + skode);
+    }
+    dest.push(prefix + kode);
+  });
 }
 
 function onlyUnique(value, index, self) {
