@@ -2,8 +2,8 @@ const { io, log } = require("lastejobb");
 
 const relasjon_oppsett = [
   {
-    kriterie: "truetvurdering",
-    key: "Kategori2015",
+    kriterie: "gjeldende",
+    key: "kategori",
     prefix: "RL-",
     tekst: "Rødlistekategori<->Art"
   }
@@ -16,24 +16,24 @@ io.skrivDatafil(__filename, r);
 
 function map(e) {
   //  json.moveKey(e, "beskrivelse av arten", "beskrivelse.nob");
-  const remove = [
-    "2010 kategori",
-    "2010 kriterier",
-    "A",
-    "B",
-    "C",
-    "D",
-    "Oa",
-    "Region",
-    "Vitenskapelig navn"
-  ];
-  for (let r of remove) delete e[r];
-  e = { truetvurdering: e };
-  delete e.truetvurdering.kode;
+  //const remove = ["2010 kategori", "2010 kriterier", "A", "B", "C", "D", "Oa"];
+  //for (let r of remove) delete e[r];
+  delete e.kode;
+  const f = {};
   relasjon_oppsett.forEach(cfg => {
-    addItems(e, e[cfg.kriterie], cfg.key, cfg.prefix, cfg.tekst, cfg.mapper);
+    Object.keys(e).forEach(sted =>
+      addItems(
+        f,
+        e[sted][cfg.kriterie],
+        cfg.key,
+        cfg.prefix,
+        cfg.tekst,
+        cfg.mapper
+      )
+    );
   });
-  return e;
+  f.truetvurdering = e;
+  return f;
 }
 
 function addItems(rec, kriterier, key, prefix = "", destkey, mapper) {
