@@ -15,9 +15,6 @@ items.forEach(e => (r[e.kode] = map(e)));
 io.skrivDatafil(__filename, r);
 
 function map(e) {
-  //  json.moveKey(e, "beskrivelse av arten", "beskrivelse.nob");
-  //const remove = ["2010 kategori", "2010 kriterier", "A", "B", "C", "D", "Oa"];
-  //for (let r of remove) delete e[r];
   delete e.kode;
   const f = {};
   relasjon_oppsett.forEach(cfg => {
@@ -40,7 +37,6 @@ function addItems(rec, kriterier, key, prefix = "", destkey, mapper) {
   destkey = destkey || key;
   let koder = kriterier && kriterier[key];
   if (!koder) return;
-  delete kriterier[key];
   if (!Array.isArray(koder)) koder = [koder];
 
   if (koder.length <= 0) return;
