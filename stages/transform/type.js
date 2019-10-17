@@ -11,12 +11,21 @@ const beskrivelser = json.arrayToObject(
     uniqueKey: "kode"
   }
 );
+
+const hjemmeside = json.arrayToObject(
+  io.lesDatafil("art-hjemmeside/type").items,
+  {
+    uniqueKey: "kode"
+  }
+);
+
 const truetrot = io.lesDatafil("art-truet/type").items;
 truetrot.forEach(truet => art.push(truet));
 const fremmedrot = io.lesDatafil("art-fremmed/type").items;
 fremmedrot.forEach(fremmed => art.push(fremmed));
 
 art.forEach(e => {
+  flett(e, hjemmeside[e.kode]);
   flett(e, beskrivelser[e.kode]);
   flett(e, fremmede[e.kode]);
   flett(e, truetart[e.kode]);
