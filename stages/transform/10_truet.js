@@ -16,8 +16,7 @@ io.skrivDatafil(__filename, r);
 
 function map(e) {
   delete e.kode;
-  const f = { lenke: e.lenke };
-  delete e.lenke;
+  const f = {};
   relasjon_oppsett.forEach(cfg => {
     Object.keys(e).forEach(sted =>
       addItems(
@@ -31,6 +30,7 @@ function map(e) {
     );
   });
   f.truetvurdering = e;
+  json.moveKey(f, "truetvurdering.norge.gjeldende.lenke", "lenke");
   return f;
 }
 
