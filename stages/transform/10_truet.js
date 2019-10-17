@@ -1,4 +1,4 @@
-const { io, log } = require("lastejobb");
+const { io, json, log } = require("lastejobb");
 
 const relasjon_oppsett = [
   {
@@ -16,7 +16,8 @@ io.skrivDatafil(__filename, r);
 
 function map(e) {
   delete e.kode;
-  const f = {};
+  const f = { lenke: e.lenke };
+  delete e.lenke;
   relasjon_oppsett.forEach(cfg => {
     Object.keys(e).forEach(sted =>
       addItems(
