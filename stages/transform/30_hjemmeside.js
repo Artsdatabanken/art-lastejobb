@@ -45,8 +45,15 @@ function map(e) {
 }
 
 function addItems(art, src, key, prefix = "", destkey, mapper) {
+  if (!src) return;
   destkey = destkey || key;
-  let koder = src && src[key];
+  const path = key.split(".");
+  while (path.length > 0) {
+    const subkey = path.shift();
+    if (!src[subkey]) return;
+    src = src[subkey];
+  }
+  let koder = src;
   if (!koder) return;
   delete src[key];
   if (!Array.isArray(koder)) koder = [koder];
