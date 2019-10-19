@@ -1,4 +1,4 @@
-const { io, json, log } = require("lastejobb");
+const { io, log } = require("lastejobb");
 
 const relasjon_oppsett = [
   {

@@ -21,21 +21,15 @@ truetrot.forEach(truet => art.push(truet));
 const fremmedrot = io.lesDatafil("art-fremmed/type").items;
 fremmedrot.forEach(fremmed => art.push(fremmed));
 
-let maxcount = 0;
-let showcase = "";
 art.forEach(e => {
   flett(e, hjemmeside[e.kode]);
   flett(e, beskrivelser[e.kode]);
   flett(e, fremmede[e.kode]);
   flett(e, truetart[e.kode]);
-  const count = Object.keys(e).length;
-  if (count > maxcount) {
-    showcase = e.kode;
-    maxcount = count;
-  }
 });
-log.warn(showcase);
+
 io.skrivBuildfil(__filename, art);
+log.warn(showcase.url);
 
 function flett(dest, src) {
   if (!src) return;
