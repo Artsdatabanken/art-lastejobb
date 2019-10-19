@@ -1,6 +1,8 @@
 const { io, log, json } = require("lastejobb");
 
 const la2kode = latinTilKode();
+const områder = {};
+
 function latinTilKode() {
   const arter = io.lesDatafil("art-takson/type").items;
   const kode2navn = {};
@@ -60,10 +62,15 @@ const relasjon_oppsett = [
 const items = io.lesDatafil("art-fremmed/art").items;
 items.forEach(rec => map(rec));
 io.skrivDatafil(__filename, items);
+io.skrivDatafil("område", områder);
 
 function map(e) {
   mapRisikovurdering(e);
-  if (e.utbredelse) delete e.utbredelse["finnes i områder"];
+  if (e.utbredelse && e.utbredelse["finnes i områder"]) {
+    e.utbredelse["finnes i områder"].forEach(o => {
+      områder[o] = { kode: "AO-TO-FL-xx", tittel: "" };
+    });
+  }
   const lm = e.utbredelse && e.utbredelse.livsmiljø;
   if (lm) {
     lm.forEach(lm1 => {
@@ -74,32 +81,26 @@ function map(e) {
     delete e.utbredelse.livsmiljø;
   }
   json.moveKey(e, "beskrivelse av arten", "beskrivelse.nob");
-  delete e.utbredelse;
   if (e.takson) e.kode = "AR-" + e.takson.scientificnameid;
   delete e.takson;
-  const remove = [
-    "tidligere vurdert",
-    "referanser",
-    "norsk bestand",
-    "ekspertgruppe",
-    "ekspertgruppe id"
-  ];
+  json.moveKey(
+    e,
+    "reproduksjon.norsk bestand",
+    "utbredelse.tidslinje.etablert_bestand"
+  );
+  const remove = ["ekspertgruppe", "ekspertgruppe id"];
   for (let r of remove) delete e[r];
-  json.moveKey(e, "risikovurdering.import", "egenskap.");
   json.removeEmptyKeys(e);
 }
 
 function mapRisikovurdering(e) {
   if (!e.risikovurdering) return;
   mapRelasjoner(e, e.risikovurdering);
-  json.moveKey(e, "reproduksjon", "egenskap.reproduksjon");
-  const rv = e.risikovurdering;
-  const fo = rv.import && rv.import["først observert"];
-  if (fo) {
-    e.egenskap = e.egenskap || { reproduksjon: {} };
-    e.egenskap.reproduksjon["først observert"] = fo;
-    delete rv.import["først observert"];
-  }
+  json.moveKey(
+    e,
+    "risikovurdering.import.først observert",
+    "utbredelse.tidslinje.først_observert"
+  );
   if (e.risikovurdering.kriterie) {
     const kriterie = e.risikovurdering.kriterie;
     delete kriterie.definisjonsavgrensning;
