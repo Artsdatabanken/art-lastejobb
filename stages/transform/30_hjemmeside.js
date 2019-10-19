@@ -1,20 +1,4 @@
-const { io, log, json } = require("lastejobb");
-
-const la2kode = latinTilKode();
-function latinTilKode() {
-  const arter = io.lesDatafil("art-takson/type").items;
-  const kode2navn = {};
-  arter.forEach(art => {
-    kode2navn[art.kode] = art.tittel.sn;
-  });
-  const r = {};
-
-  arter.forEach(art => {
-    if (!art.foreldre) return;
-    r[art.tittel.sn.toLowerCase()] = art.kode;
-  });
-  return r;
-}
+const { io, json, log } = require("lastejobb");
 
 const relasjon_oppsett = [
   {
@@ -30,7 +14,7 @@ const relasjon_oppsett = [
   {
     kriterie: "diett",
     key: "art",
-    tekst: "Spiser<->Bliir spist av"
+    tekst: "Spiser<->Blir spist av"
   }
 ];
 
