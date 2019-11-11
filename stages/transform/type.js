@@ -16,11 +16,6 @@ const hjemmeside = json.arrayToObject(io.lesDatafil("30_hjemmeside").items, {
   uniqueKey: "kode"
 });
 
-const truetrot = io.lesDatafil("art-truet/type").items;
-truetrot.forEach(truet => art.push(truet));
-const fremmedrot = io.lesDatafil("art-fremmed/type").items;
-fremmedrot.forEach(fremmed => art.push(fremmed));
-
 art.forEach(e => {
   const kode = e.kode;
   flett(e, hjemmeside[kode]);
@@ -30,6 +25,10 @@ art.forEach(e => {
 });
 
 const r = art.filter(e => e.finnesINorge);
+const truetrot = io.lesDatafil("art-truet/type").items;
+truetrot.forEach(truet => r.push(truet));
+const fremmedrot = io.lesDatafil("art-fremmed/type").items;
+fremmedrot.forEach(fremmed => r.push(fremmed));
 
 io.skrivBuildfil(__filename, r);
 
