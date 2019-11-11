@@ -29,7 +29,6 @@ art.forEach(e => {
 });
 
 io.skrivBuildfil(__filename, art);
-log.warn(showcase.url);
 
 function flett(dest, src) {
   if (!src) return;
