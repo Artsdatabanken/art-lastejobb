@@ -22,13 +22,16 @@ const fremmedrot = io.lesDatafil("art-fremmed/type").items;
 fremmedrot.forEach(fremmed => art.push(fremmed));
 
 art.forEach(e => {
-  flett(e, hjemmeside[e.kode]);
-  flett(e, beskrivelser[e.kode]);
-  flett(e, fremmede[e.kode]);
-  flett(e, truetart[e.kode]);
+  const kode = e.kode;
+  flett(e, hjemmeside[kode]);
+  flett(e, beskrivelser[kode]);
+  flett(e, fremmede[kode]);
+  flett(e, truetart[kode]);
 });
 
-io.skrivBuildfil(__filename, art);
+const r = art.filter(e => e.finnesINorge);
+
+io.skrivBuildfil(__filename, r);
 
 function flett(dest, src) {
   if (!src) return;
