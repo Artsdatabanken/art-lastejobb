@@ -18,7 +18,7 @@ const relasjon_oppsett = [
   }
 ];
 
-const items = io.lesDatafil("art-hjemmeside/type").items;
+const items = io.lesDatafil("art-databank/type").items;
 items.forEach(rec => map(rec));
 io.skrivDatafil(__filename, items);
 
