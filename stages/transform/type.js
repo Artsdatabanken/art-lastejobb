@@ -1,4 +1,4 @@
-const { io, log, json } = require("lastejobb");
+const { io, json } = require("lastejobb");
 
 const art = io.lesDatafil("art-takson/type").items;
 const fremmede = json.arrayToObject(io.lesDatafil("40_fremmed").items, {
@@ -12,14 +12,14 @@ const beskrivelser = json.arrayToObject(
   }
 );
 
-const hjemmeside = json.arrayToObject(io.lesDatafil("30_hjemmeside").items, {
+const hjemmeside = json.arrayToObject(io.lesDatafil("30_databank").items, {
   uniqueKey: "kode"
 });
 
 art.forEach(e => {
   const kode = e.kode;
   flett(e, hjemmeside[kode]);
-  flett(e, beskrivelser[kode]);
+  //flett(e, beskrivelser[kode]);
   flett(e, fremmede[kode]);
   flett(e, truetart[kode]);
 });

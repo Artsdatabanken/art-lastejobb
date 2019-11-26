@@ -23,6 +23,7 @@ items.forEach(rec => map(rec));
 io.skrivDatafil(__filename, items);
 
 function map(e) {
+  delete e.title; // Enkelte har "sn - nob" .. bruker heller navn fra art-takson
   relasjon_oppsett.forEach(cfg => {
     addItems(e, e[cfg.kriterie], cfg.key, cfg.prefix, cfg.tekst, cfg.mapper);
   });
