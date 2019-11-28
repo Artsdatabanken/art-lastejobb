@@ -5,13 +5,6 @@ const fremmede = json.arrayToObject(io.lesDatafil("40_fremmed").items, {
   uniqueKey: "kode"
 });
 const truetart = io.lesDatafil("10_truet");
-const beskrivelser = json.arrayToObject(
-  io.lesDatafil("art-beskrivelse/type").items,
-  {
-    uniqueKey: "kode"
-  }
-);
-
 const hjemmeside = json.arrayToObject(io.lesDatafil("30_databank").items, {
   uniqueKey: "kode"
 });
@@ -19,7 +12,6 @@ const hjemmeside = json.arrayToObject(io.lesDatafil("30_databank").items, {
 art.forEach(e => {
   const kode = e.kode;
   flett(e, hjemmeside[kode]);
-  //flett(e, beskrivelser[kode]);
   flett(e, fremmede[kode]);
   flett(e, truetart[kode]);
 });
