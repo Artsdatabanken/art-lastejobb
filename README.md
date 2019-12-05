@@ -1,4 +1,4 @@
-## Dataflyt
+## Komponenter og dataflyt
 
 [![Dataflyt](./dataflyt.png)](https://artsdatabanken.github.io/art-lastejobb/)
 
