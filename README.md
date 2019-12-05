@@ -1,3 +1,7 @@
+## Dataflyt
+
+![Dataflyt](./dataflyt.svg)
+
 ## Kataloger
 
 - `stages/download`: Script for å laste ned eksterne datafiler til `data/`
