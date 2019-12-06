@@ -1,6 +1,6 @@
 ## Komponenter og dataflyt
 
-[![Dataflyt](./dataflyt.png)](https://artsdatabanken.github.io/art-lastejobb/)
+[![Dataflyt](./doc/dataflyt.png)](https://artsdatabanken.github.io/art-lastejobb/)
 
 ## Kataloger
 
