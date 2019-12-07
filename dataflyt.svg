@@ -12,6 +12,15 @@
       <stop offset="100%" style="stop-color:#ffffff"/>
     </linearGradient>
   </defs>
+  <style>
+image {
+  opacity:0.4;
+}
+a:hover rect {
+fill: #eee;
+  fill-opacity: 1;
+}
+  </style>
   <g>
     <a xlink:href="https://github.com/Artsdatabanken/art">
       <rect x="1222" y="132" width="118" height="58" rx="8.7" ry="8.7" fill-opacity="0.8" fill="#000000" stroke="#000000" stroke-opacity="0.8" transform="translate(2,3)" opacity="0.25"/>
