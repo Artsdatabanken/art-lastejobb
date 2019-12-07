@@ -1,6 +1,24 @@
+# art-lastejobb
+
+Produserer datafil med "all" kunnskap om arter.
+
 ## Komponenter og dataflyt
 
+### Dataflyt
+
 [![Dataflyt](./doc/dataflyt.png)](https://artsdatabanken.github.io/art-lastejobb/)
+
+### Tegnforklaring
+
+| Symbol                                                                                                | Forklaring               |
+| ----------------------------------------------------------------------------------------------------- | ------------------------ |
+| ![Dataflyt](https://github.com/Artsdatabanken/nin-arkitektur-dokumentasjon/raw/master/image/api.png)  | API (HTTP REST)          |
+| ![Dataflyt](https://github.com/Artsdatabanken/nin-arkitektur-dokumentasjon/raw/master/image/data.png) | Åpne data                |
+| ![Dataflyt](https://github.com/Artsdatabanken/nin-arkitektur-dokumentasjon/raw/master/image/kart.png) | Kart                     |
+| ![Dataflyt](https://github.com/Artsdatabanken/nin-arkitektur-dokumentasjon/raw/master/image/last.png) | Lastejobb / Konvertering |
+| ![Dataflyt](https://github.com/Artsdatabanken/nin-arkitektur-dokumentasjon/raw/master/image/lib.png)  | Bibliotek                |
+| ![Dataflyt](https://github.com/Artsdatabanken/nin-arkitektur-dokumentasjon/raw/master/image/tool.png) | Verktøy                  |
+| ![Dataflyt](https://github.com/Artsdatabanken/nin-arkitektur-dokumentasjon/raw/master/image/www.png)  | Web-side/applikasjon     |
 
 ## Kataloger
 
