@@ -4,7 +4,7 @@ const la2kode = latinTilKode();
 const områder = {};
 
 function latinTilKode() {
-  const arter = io.lesDatafil("art-takson/type").items;
+  const arter = io.lesTempJson("art-takson/type");
   const kode2navn = {};
   arter.forEach(art => {
     kode2navn[art.kode] = art.tittel.sn;
@@ -59,7 +59,7 @@ const relasjon_oppsett = [
   }
 ];
 
-const items = io.lesDatafil("art-fremmed/art").items;
+const items = io.lesTempJson("art-fremmed/art");
 items.forEach(rec => map(rec));
 io.skrivDatafil(__filename, items);
 io.skrivDatafil("område", områder);

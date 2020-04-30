@@ -1,6 +1,6 @@
 const { io, log } = require("lastejobb");
 
-const fab = io.lesDatafil("20_fremmed").items;
+const fab = io.lesTempJson("20_fremmed");
 const la2kode = latinTilKode();
 
 fab.forEach(rec => map(rec));
@@ -38,7 +38,7 @@ function mapArter(rv) {
 }
 
 function latinTilKode() {
-  const arter = io.lesDatafil("art-takson/type").items;
+  const arter = io.lesTempJson("art-takson/type");
   const kode2navn = {};
   arter.forEach(art => {
     kode2navn[art.kode] = art.tittel.sn;

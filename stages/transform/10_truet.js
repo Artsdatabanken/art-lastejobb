@@ -9,7 +9,7 @@ const relasjon_oppsett = [
   }
 ];
 
-const items = io.lesDatafil("art-truet/art").items;
+const items = io.lesTempJson("art-truet/art");
 const r = {};
 items.forEach(e => (r[e.kode] = map(e)));
 io.skrivDatafil(__filename, r);

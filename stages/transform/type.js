@@ -1,11 +1,11 @@
 const { io, json } = require("lastejobb");
 
-const art = io.lesDatafil("art-takson/type").items;
-const fremmede = json.arrayToObject(io.lesDatafil("40_fremmed").items, {
+const art = io.lesTempJson("art-takson/type");
+const fremmede = json.arrayToObject(io.lesTempJson("40_fremmed"), {
   uniqueKey: "kode"
 });
-const truetart = io.lesDatafil("10_truet");
-const hjemmeside = json.arrayToObject(io.lesDatafil("30_databank").items, {
+const truetart = io.lesTempJson("10_truet");
+const hjemmeside = json.arrayToObject(io.lesTempJson("30_databank"), {
   uniqueKey: "kode"
 });
 
@@ -17,9 +17,9 @@ art.forEach(e => {
 });
 
 const r = art.filter(e => e.finnesINorge);
-const truetrot = io.lesDatafil("art-truet/type").items;
+const truetrot = io.lesTempJson("art-truet/type");
 truetrot.forEach(truet => r.push(truet));
-const fremmedrot = io.lesDatafil("art-fremmed/type").items;
+const fremmedrot = io.lesTempJson("art-fremmed/type");
 fremmedrot.forEach(fremmed => r.push(fremmed));
 
 io.skrivBuildfil(__filename, r);

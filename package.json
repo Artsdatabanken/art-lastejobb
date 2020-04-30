@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "download": "node index download",
-    "transform": "node --max_old_space_size=8192 index transform",
+    "download": "node node_modules/lastejobb/lastejobb stages/download",
+    "transform": "node --max_old_space_size=8192 node_modules/lastejobb/lastejobb stages/transform",
     "build": "npm run download && npm run transform",
     "test": "node --max_old_space_size=6144 node_modules/.bin/jest",
     "deploy": "./scripts/deploy.sh"
@@ -14,6 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lastejobb": "^2.17.4"
+    "lastejobb": "^3.5.3"
   }
 }
